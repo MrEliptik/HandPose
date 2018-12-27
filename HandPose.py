@@ -15,7 +15,7 @@ score_thresh = 0.2
 # does detection on images in an input queue and puts it on an output queue
 
 
-def worker(input_q, output_q, cap_params, frame_processed):
+def worker(input_q, output_q, cropped_output_q, cap_params, frame_processed):
     print(">> loading frozen model for worker")
     detection_graph, sess = detector_utils.load_inference_graph()
     sess = tf.Session(graph=detection_graph)
@@ -31,17 +31,18 @@ def worker(input_q, output_q, cap_params, frame_processed):
                 frame, detection_graph, sess)
 
             # get region of interest
-            detector_utils.get_box_image(cap_params['num_hands_detect'], cap_params["score_thresh"],
+            res = detector_utils.get_box_image(cap_params['num_hands_detect'], cap_params["score_thresh"],
                 scores, boxes, cap_params['im_width'], cap_params['im_height'],
                 frame)
-            '''
+            
             # draw bounding boxes
             detector_utils.draw_box_on_image(
                 cap_params['num_hands_detect'], cap_params["score_thresh"],
                 scores, boxes, cap_params['im_width'], cap_params['im_height'],
                 frame)
-            '''
+            
             # add frame annotated with bounding box to queue
+            cropped_output_q.put(res)
             output_q.put(frame)
             frame_processed += 1
         else:
@@ -112,6 +113,7 @@ if __name__ == '__main__':
 
     input_q = Queue(maxsize=args.queue_size)
     output_q = Queue(maxsize=args.queue_size)
+    cropped_output_q = Queue(maxsize=args.queue_size)
 
     video_capture = WebcamVideoStream(
         src=args.video_source, width=args.width, height=args.height).start()
@@ -128,7 +130,7 @@ if __name__ == '__main__':
 
     # spin up workers to paralleize detection.
     pool = Pool(args.num_workers, worker,
-                (input_q, output_q, cap_params, frame_processed))
+                (input_q, output_q, cropped_output_q, cap_params, frame_processed))
 
     start_time = datetime.datetime.now()
     num_frames = 0
@@ -144,12 +146,28 @@ if __name__ == '__main__':
 
         input_q.put(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         output_frame = output_q.get()
-
-        output_frame = cv2.cvtColor(output_frame, cv2.COLOR_RGB2BGR)
+        cropped_output = cropped_output_q.get()
 
         elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
         num_frames += 1
         fps = num_frames / elapsed_time
+
+        if (cropped_output is not None):
+            cropped_output = cv2.cvtColor(cropped_output, cv2.COLOR_RGB2BGR)
+            if (args.display > 0):
+                cv2.imshow('Cropped', cropped_output)
+                if cv2.waitKey(1) & 0xFF == ord('q'):
+                    break
+            else:
+                if (num_frames == 400):
+                    num_frames = 0
+                    start_time = datetime.datetime.now()
+                else:
+                    print("frames processed: ", index, "elapsed time: ",
+                          elapsed_time, "fps: ", str(int(fps)))
+
+        output_frame = cv2.cvtColor(output_frame, cv2.COLOR_RGB2BGR)
+
         # print("frame ",  index, num_frames, elapsed_time, fps)
 
         if (output_frame is not None):
