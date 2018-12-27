@@ -57,7 +57,7 @@ if __name__ == '__main__':
         '--num_hands',
         dest='num_hands',
         type=int,
-        default=2,
+        default=1,
         help='Max number of hands to detect.')
     parser.add_argument(
         '-fps',
