@@ -45,6 +45,7 @@ def read_data():
                     y[count_im] = count_classes
                     count_im += 1
         count_classes += 1
+        x = x/255
 
     return x, y
 
