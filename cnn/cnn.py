@@ -7,7 +7,7 @@ from keras import backend as K
 from keras.layers.normalization import BatchNormalization
 
 batch_size = 128
-num_classes = 10
+num_classes = 5
 epochs = 10
 
 # input image dimensions
@@ -63,7 +63,7 @@ model.add(Dense(512))
 model.add(Activation('relu'))
 BatchNormalization()
 model.add(Dropout(0.2))
-model.add(Dense(10))
+model.add(Dense(num_classes))
 
 model.add(Activation('softmax'))
 
@@ -82,4 +82,4 @@ score = model.evaluate(x_test, y_test, verbose=1)
 
 print('Test loss:', score[0])
 print('Test accuracy:', score[1])
-model.save('model/hand_poses.h5')
+model.save('cnn/model/hand_poses.h5')
