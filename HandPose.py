@@ -156,7 +156,7 @@ if __name__ == '__main__':
             cropped_output = cv2.cvtColor(cropped_output, cv2.COLOR_RGB2BGR)
             if (args.display > 0):
                 cv2.imshow('Cropped', cropped_output)
-                cv2.imwrite('image_' + str(num_frames) + '.png', cropped_output)
+                #cv2.imwrite('image_' + str(num_frames) + '.png', cropped_output)
                 if cv2.waitKey(1) & 0xFF == ord('q'):
                     break
             else:

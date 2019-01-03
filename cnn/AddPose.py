@@ -74,10 +74,10 @@ if cv2.waitKey(2500) & 0xFF == ord('n'):
     #Handle no
     pass
 
-cap = cv2.VideoCapture(name_pose + '.avi')
+vid = cv2.VideoCapture(name_pose + '.avi')
 
 # Check if the video
-if (cap.isOpened() == False):
+if (vid.isOpened() == False):
     print("Error opening video stream or file")
 
 if not os.path.exists(name_pose):
@@ -85,15 +85,14 @@ if not os.path.exists(name_pose):
 
 iter = 0
 # Read until video is completed
-while(cap.isOpened()):
+while(vid.isOpened()):
     # Capture frame-by-frame
-    ret, frame = cap.read()
+    ret, frame = vid.read()
     if ret == True:
-        # Display the resulting frame
-        cv2.imwrite(name_pose+"/im"+str(iter)+".png", frame)
+        #TODO : Run hand detection on each frame, and save cropped box if found
         iter += 1
 
     # Break the loop
     else:
         break
-cap.release()
+vid.release()
