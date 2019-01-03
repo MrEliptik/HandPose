@@ -26,20 +26,16 @@ def worker(input_q, output_q, cropped_output_q, cap_params, frame_processed):
             # Actual detection. Variable boxes contains the bounding box cordinates for hands detected,
             # while scores contains the confidence for each of these boxes.
             # Hint: If len(boxes) > 1 , you may assume you have found atleast one hand (within your score threshold)
-
             boxes, scores = detector_utils.detect_objects(
                 frame, detection_graph, sess)
 
             # get region of interest
             res = detector_utils.get_box_image(cap_params['num_hands_detect'], cap_params["score_thresh"],
-                scores, boxes, cap_params['im_width'], cap_params['im_height'],
-                frame)
+                scores, boxes, cap_params['im_width'], cap_params['im_height'], frame)
             
             # draw bounding boxes
-            detector_utils.draw_box_on_image(
-                cap_params['num_hands_detect'], cap_params["score_thresh"],
-                scores, boxes, cap_params['im_width'], cap_params['im_height'],
-                frame)
+            detector_utils.draw_box_on_image(cap_params['num_hands_detect'], cap_params["score_thresh"],
+                scores, boxes, cap_params['im_width'], cap_params['im_height'], frame)
             
             # add frame annotated with bounding box to queue
             cropped_output_q.put(res)
@@ -121,6 +117,7 @@ if __name__ == '__main__':
     cap_params = {}
     frame_processed = 0
     cap_params['im_width'], cap_params['im_height'] = video_capture.size()
+    print(cap_params['im_width'], cap_params['im_height'])
     cap_params['score_thresh'] = score_thresh
 
     # max number of hands we want to detect/track

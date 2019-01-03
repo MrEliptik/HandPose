@@ -96,3 +96,5 @@ egohands_data.zip
 images/test/
 images/train/
 samples/
+Poses/
+.vscode/launch.json
