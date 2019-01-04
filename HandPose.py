@@ -1,4 +1,5 @@
 from utils import detector_utils as detector_utils
+from utils import pose_classification_utils as classifier
 import cv2
 import tensorflow as tf
 import multiprocessing
@@ -7,6 +8,8 @@ import time
 from utils.detector_utils import WebcamVideoStream
 import datetime
 import argparse
+from keras.models import load_model
+import gui
 
 frame_processed = 0
 score_thresh = 0.24
@@ -15,10 +18,14 @@ score_thresh = 0.24
 # does detection on images in an input queue and puts it on an output queue
 
 
-def worker(input_q, output_q, cropped_output_q, cap_params, frame_processed):
+def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_processed):
     print(">> loading frozen model for worker")
     detection_graph, sess = detector_utils.load_inference_graph()
     sess = tf.Session(graph=detection_graph)
+
+    print(">> loading keras model for pose classification")
+    model = load_model('cnn/models/hand_poses.h5')
+
     while True:
         #print("> ===== in worker loop, frame ", frame_processed)
         frame = input_q.get()
@@ -36,6 +43,11 @@ def worker(input_q, output_q, cropped_output_q, cap_params, frame_processed):
             # draw bounding boxes
             detector_utils.draw_box_on_image(cap_params['num_hands_detect'], cap_params["score_thresh"],
                 scores, boxes, cap_params['im_width'], cap_params['im_height'], frame)
+            
+            # classify hand pose
+            if res is not None:
+                class_res = classifier.classify(model, res)
+                inferences_q.put(class_res)       
             
             # add frame annotated with bounding box to queue
             cropped_output_q.put(res)
@@ -107,9 +119,10 @@ if __name__ == '__main__':
         help='Size of the queue.')
     args = parser.parse_args()
 
-    input_q = Queue(maxsize=args.queue_size)
-    output_q = Queue(maxsize=args.queue_size)
-    cropped_output_q = Queue(maxsize=args.queue_size)
+    input_q             = Queue(maxsize=args.queue_size)
+    output_q            = Queue(maxsize=args.queue_size)
+    cropped_output_q    = Queue(maxsize=args.queue_size)
+    inferences_q        = Queue(maxsize=args.queue_size)
 
     video_capture = WebcamVideoStream(
         src=args.video_source, width=args.width, height=args.height).start()
@@ -127,7 +140,7 @@ if __name__ == '__main__':
 
     # spin up workers to paralleize detection.
     pool = Pool(args.num_workers, worker,
-                (input_q, output_q, cropped_output_q, cap_params, frame_processed))
+                (input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_processed))
 
     start_time = datetime.datetime.now()
     num_frames = 0
@@ -144,10 +157,23 @@ if __name__ == '__main__':
         input_q.put(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         output_frame = output_q.get()
         cropped_output = cropped_output_q.get()
+        inferences = None
+
+        if(inferences_q.full()):
+            print("FULL")
+            inferences_q.empty()
+        try:
+            inferences = inferences_q.get_nowait()
+        except:
+            print('Queue empty')
 
         elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
         num_frames += 1
         fps = num_frames / elapsed_time
+
+        # Display inferences
+        if(inferences is not None):
+           gui.drawInferences(inferences, ['Dang', 'Fist', 'Four', 'Palm', 'Startrek'])
 
         if (cropped_output is not None):
             cropped_output = cv2.cvtColor(cropped_output, cv2.COLOR_RGB2BGR)
