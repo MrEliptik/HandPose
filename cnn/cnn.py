@@ -11,9 +11,9 @@ sys.path.insert(1, os.path.join(sys.path[0], '..'))
 import buildPosesDataset as dataset
 
 def train():
-    batch_size = 128
+    batch_size = 256
     num_classes = 5
-    epochs = 10
+    epochs = 15
 
     # input image dimensions
     img_rows, img_cols = 28, 28
