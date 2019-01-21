@@ -9,8 +9,10 @@ def read_data(req_poses):
     count_im = 0
     count_classes = 0
     poses = os.listdir('Poses/')
-    for pose in poses:
-        if pose in req_poses:
+    if(req_poses[0]=='all'):
+        req_poses = poses.copy()
+    for pose in poses:      
+        if pose in req_poses:    
             print(">> Working on pose : " + pose)
             subdirs = os.listdir('Poses/' + pose + '/')
             count_classes += 1
@@ -41,13 +43,13 @@ def read_data(req_poses):
                         # Read image
                         im = cv2.imread(path)
                         im = cv2.cvtColor(im, cv2.COLOR_BGR2GRAY)
-                        im = im.astype(dtype="float32")
+                        im = im.astype(dtype="float64")
                         im = np.reshape(im, (28, 28, 1))
                         x[count_im][:][:][:] = im
                         y[count_im] = count_classes
                         count_im += 1
             count_classes += 1
-            x = x/255
+    x = x/255
 
     return x, y
 
