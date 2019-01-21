@@ -17,7 +17,10 @@ for pose in poses:
                 path = 'Poses/' + pose + '/' + subdir + '/' + file
                 # Read image
                 im = cv2.imread(path)
-                # Resize image
-                im = cv2.resize(im, (28, 28), interpolation=cv2.INTER_AREA)
-                # Write image
-                cv2.imwrite(path, im)
+
+                height, width, channels = im.shape
+                if not height == width == 28:
+                    # Resize image
+                    im = cv2.resize(im, (28, 28), interpolation=cv2.INTER_AREA)
+                    # Write image
+                    cv2.imwrite(path, im)

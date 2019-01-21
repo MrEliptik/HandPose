@@ -173,7 +173,7 @@ if __name__ == '__main__':
 
         # Display inferences
         if(inferences is not None):
-           gui.drawInferences(inferences, ['Dang', 'Fist', 'Four', 'Palm', 'Startrek'])
+           gui.drawInferences(inferences, ['Four', 'Dang', 'Startrek', 'Fist', 'Palm'])
 
         if (cropped_output is not None):
             cropped_output = cv2.cvtColor(cropped_output, cv2.COLOR_RGB2BGR)

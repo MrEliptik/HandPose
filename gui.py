@@ -24,7 +24,7 @@ def drawInferences(values, names=['', '', '', '', '']):
 
 def test():
     values = [0.2, 0.3, 0.1, 0.9, 0.6]
-    names = ['Dang', 'Fist', 'Grub', 'Startrek', 'Four']
+    names = ['Four', 'Dang', 'Startrej', 'Fist', 'Palm']
     while(True):
         for i in range(len(values)):
             values[i] = randint(0, 100)/100

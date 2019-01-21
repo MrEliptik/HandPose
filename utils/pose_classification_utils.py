@@ -29,7 +29,7 @@ if __name__ == "__main__":
     from keras.models import load_model
 
     print(">> loading keras model for pose classification")
-    model = load_model('cnn/models/hand_poses.h5')
+    model = load_model('cnn/models/hand_poses_14_.h5')
 
     # Fist
     print('<< FIST >>')

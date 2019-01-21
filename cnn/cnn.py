@@ -5,15 +5,16 @@ from keras.layers import Dense, Dropout, Flatten, Activation
 from keras.layers import Conv2D, MaxPooling2D
 from keras import backend as K
 from keras.layers.normalization import BatchNormalization
+import matplotlib.pyplot as plt
 
 import os,sys
 sys.path.insert(1, os.path.join(sys.path[0], '..'))
 import buildPosesDataset as dataset
 
 def train():
-    batch_size = 256
+    batch_size = 64
     num_classes = 5
-    epochs = 15
+    epochs = 14
 
     # input image dimensions
     img_rows, img_cols = 28, 28
@@ -41,31 +42,40 @@ def train():
     ####### Model structure #######
     model = Sequential()
 
-    model.add(Conv2D(32, (3, 3), input_shape=(28,28,1)))
+    model.add(Conv2D(64, (3, 3), input_shape=(28,28,1)))
     model.add(Activation('relu'))
-    BatchNormalization(axis=-1)
-    model.add(Conv2D(32, (3, 3)))
-    model.add(Activation('relu'))
-    model.add(MaxPooling2D(pool_size=(2,2)))
-
-    BatchNormalization(axis=-1)
-    model.add(Conv2D(64,(3, 3)))
-    model.add(Activation('relu'))
+    model.add(Dropout(0.1))
     BatchNormalization(axis=-1)
     model.add(Conv2D(64, (3, 3)))
     model.add(Activation('relu'))
+    model.add(Dropout(0.1))
+    BatchNormalization(axis=-1)
+    model.add(Conv2D(64, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(Dropout(0.1))
+    model.add(MaxPooling2D(pool_size=(2,2)))
+
+    BatchNormalization(axis=-1)
+    model.add(Conv2D(128,(3, 3)))
+    model.add(Activation('relu'))
+    model.add(Dropout(0.1))
+    BatchNormalization(axis=-1)
+    model.add(Conv2D(128, (3, 3)))
+    model.add(Activation('relu'))
+    model.add(Dropout(0.1))
     model.add(MaxPooling2D(pool_size=(2,2)))
 
     model.add(Flatten())
 
     # Fully connected layer
     BatchNormalization()
-    model.add(Dense(512))
+    model.add(Dense(1024))
     model.add(Activation('relu'))
+    model.add(Dropout(0.5))
     BatchNormalization()
-    model.add(Dropout(0.2))
-    model.add(Dense(num_classes))
 
+    # Classification layer
+    model.add(Dense(num_classes))
     model.add(Activation('softmax'))
 
     model.compile(loss=keras.losses.categorical_crossentropy,
@@ -73,7 +83,7 @@ def train():
                 metrics=['accuracy'])
 
     ####### TRAINING #######
-    model.fit(x_train, y_train,
+    hist = model.fit(x_train, y_train,
             batch_size=batch_size,
             epochs=epochs,
             verbose=2,
@@ -83,7 +93,16 @@ def train():
 
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
-    model.save('cnn/models/hand_poses.h5')
+    model.save("cnn/models/hand_poses_" + str(epochs) + "_.h5")
+
+    # summarize history for loss
+    plt.plot(hist.history["loss"])
+    plt.plot(hist.history["val_loss"])
+    plt.title("model loss")
+    plt.ylabel("loss")
+    plt.xlabel("epoch")
+    plt.legend(["train", "val"], loc="upper left")
+    plt.show()
 
 if __name__ == "__main__":
     train()
