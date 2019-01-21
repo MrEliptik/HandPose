@@ -24,7 +24,7 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
     sess = tf.Session(graph=detection_graph)
 
     print(">> loading keras model for pose classification")
-    model = load_model('cnn/models/hand_poses.h5')
+    model = load_model('cnn/models/hand_poses_10.h5')
 
     while True:
         #print("> ===== in worker loop, frame ", frame_processed)

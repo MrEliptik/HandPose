@@ -6,12 +6,6 @@ def classify(model, im):
 
     im = cv2.flip(im, 1)
 
-    '''
-    cv2.imshow('To Classify', im)
-    cv2.waitKey(0)
-    cv2.destroyWindow('To Classify')
-    '''
-
     # Reshape
     res = cv2.resize(im, (28,28), interpolation=cv2.INTER_AREA)
 
