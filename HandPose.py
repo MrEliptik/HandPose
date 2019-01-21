@@ -155,9 +155,24 @@ if __name__ == '__main__':
         index += 1
 
         input_q.put(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-        output_frame = output_q.get()
-        cropped_output = cropped_output_q.get()
+
+        if(output_q.full()):
+            print("FULL")
+            output_q.empty()
+        try:
+            output_frame = output_q.get_nowait()
+        except:
+            print('Queue empty')
+        if(output_q.full()):
+            print("FULL")
+            cropped_output_q.empty()
+        try:
+            cropped_output = cropped_output_q.get_nowait()
+        except:
+            print('Queue empty')
+        cropped_output = None
         inferences = None
+        output_frame = None
 
         if(inferences_q.full()):
             print("FULL")
@@ -192,11 +207,11 @@ if __name__ == '__main__':
                     print("frames processed: ", index, "elapsed time: ",
                           elapsed_time, "fps: ", str(int(fps)))
 
-        output_frame = cv2.cvtColor(output_frame, cv2.COLOR_RGB2BGR)
-
+    
         # print("frame ",  index, num_frames, elapsed_time, fps)
 
         if (output_frame is not None):
+            output_frame = cv2.cvtColor(output_frame, cv2.COLOR_RGB2BGR)
             if (args.display > 0):
                 if (args.fps > 0):
                     detector_utils.draw_fps_on_image("FPS : " + str(int(fps)),
@@ -211,9 +226,9 @@ if __name__ == '__main__':
                 else:
                     print("frames processed: ", index, "elapsed time: ",
                           elapsed_time, "fps: ", str(int(fps)))
-        else:
+        #else:
             # print("video end")
-            break
+        #    break
     elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
     fps = num_frames / elapsed_time
     print("fps", fps)
