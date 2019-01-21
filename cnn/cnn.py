@@ -13,14 +13,14 @@ import buildPosesDataset as dataset
 
 def train():
     batch_size = 64
-    num_classes = 5
-    epochs = 14
+    num_classes = 2
+    epochs = 5
 
     # input image dimensions
     img_rows, img_cols = 28, 28
 
     # the data, shuffled and split between train and test sets
-    x_train, y_train, x_test, y_test = dataset.load_data()
+    x_train, y_train, x_test, y_test = dataset.load_data(poses=["Palm", "Startrek"])
 
     if K.image_data_format() == 'channels_first':
         x_train = x_train.reshape(x_train.shape[0], 1, img_rows, img_cols)
@@ -93,7 +93,7 @@ def train():
 
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
-    model.save("cnn/models/hand_poses_" + str(epochs) + "_.h5")
+    model.save("cnn/models/hand_poses_2poses_" + str(epochs) + ".h5")
 
     # summarize history for loss
     plt.plot(hist.history["loss"])

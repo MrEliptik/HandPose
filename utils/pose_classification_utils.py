@@ -29,8 +29,9 @@ if __name__ == "__main__":
     from keras.models import load_model
 
     print(">> loading keras model for pose classification")
-    model = load_model('cnn/models/hand_poses_14_.h5')
+    model = load_model('cnn/models/hand_poses_2poses_14.h5')
 
+    '''
     # Fist
     print('<< FIST >>')
     im = cv2.imread("Poses/Fist/Fist_1/Fist_1_1302.png")
@@ -41,7 +42,18 @@ if __name__ == "__main__":
     im = cv2.imread("Poses/Dang/Dang_1/Dang_1_1223.png")
     print(classify(model, im))
 
-    # Fist
+    # Four
     print('<< FOUR >>')
     im = cv2.imread("Poses/Four/Four_1/Four_1_867.png")
+    print(classify(model, im))
+    '''
+    
+    # Startrek
+    print('<< Startrek >>')
+    im = cv2.imread("Poses/Startrek/Startrek_1/Startrek_1_867.png")
+    print(classify(model, im))
+
+    # Palm
+    print('<< Palm >>')
+    im = cv2.imread("Poses/Palm/Palm_1/Palm_1_867.png")
     print(classify(model, im))
