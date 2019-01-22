@@ -1,7 +1,21 @@
 import cv2
 import numpy as np
+from tensorflow import Graph, Session
+import tensorflow as tf
 
-def classify(model, im):
+
+def load_KerasGraph(path): 
+    thread_graph = Graph()
+    with thread_graph.as_default():
+        thread_session = Session()
+        with thread_session.as_default():
+            model = keras.models.load_model(path)
+            model._make_predict_function()
+            graph = tf.get_default_graph()
+
+    return model, graph, thread_session
+
+def classify(model, graph, sess, im):
     im = cv2.cvtColor(im, cv2.COLOR_RGB2GRAY)
 
     im = cv2.flip(im, 1)
@@ -14,16 +28,20 @@ def classify(model, im):
     res = res / 255
     res = np.reshape(res, (1, 28, 28, 1))
 
-    prediction = model.predict(res)
+    with graph.as_default():
+        with sess.as_default():
+            prediction= model.predict(res)
 
     return prediction[0] 
 
 if __name__ == "__main__":
-
-    from keras.models import load_model
+    import keras
 
     print(">> loading keras model for pose classification")
-    model = load_model('cnn/models/hand_poses_10.h5')
+    try:
+        model = keras.models.load_model("cnn/models/hand_poses_10.h5")
+    except Exception as e:
+        print(e)
 
     # Fist
     print('<< FIST >>')
