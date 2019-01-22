@@ -8,7 +8,7 @@ import time
 from utils.detector_utils import WebcamVideoStream
 import datetime
 import argparse
-from keras.models import load_model
+import keras
 import gui
 
 frame_processed = 0
@@ -24,7 +24,7 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
     sess = tf.Session(graph=detection_graph)
 
     print(">> loading keras model for pose classification")
-    model = load_model('cnn/models/hand_poses_10.h5')
+    model = keras.models.load_model ("cnn/models/hand_poses_10.h5")
 
     while True:
         #print("> ===== in worker loop, frame ", frame_processed)
@@ -46,8 +46,9 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
             
             # classify hand pose
             if res is not None:
-                class_res = classifier.classify(model, res)
-                inferences_q.put(class_res)       
+                pass
+                #class_res = classifier.classify(model, res)
+                #inferences_q.put(class_res)       
             
             # add frame annotated with bounding box to queue
             cropped_output_q.put(res)
@@ -156,39 +157,20 @@ if __name__ == '__main__':
 
         input_q.put(cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
-        if(output_q.full()):
-            print("FULL")
-            output_q.empty()
-        try:
-            output_frame = output_q.get_nowait()
-        except:
-            print('Queue empty')
-        if(output_q.full()):
-            print("FULL")
-            cropped_output_q.empty()
-        try:
-            cropped_output = cropped_output_q.get_nowait()
-        except:
-            print('Queue empty')
-        cropped_output = None
-        inferences = None
-        output_frame = None
+        output_frame = output_q.get()
+        cropped_output = cropped_output_q.get()
 
-        if(inferences_q.full()):
-            print("FULL")
-            inferences_q.empty()
-        try:
-            inferences = inferences_q.get_nowait()
-        except:
-            print('Queue empty')
+        #inferences = inferences_q.get()
 
         elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
         num_frames += 1
         fps = num_frames / elapsed_time
 
         # Display inferences
+        '''
         if(inferences is not None):
            gui.drawInferences(inferences, ['Four', 'Dang', 'Startrek', 'Fist', 'Palm'])
+        '''
 
         if (cropped_output is not None):
             cropped_output = cv2.cvtColor(cropped_output, cv2.COLOR_RGB2BGR)

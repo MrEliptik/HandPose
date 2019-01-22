@@ -19,11 +19,10 @@ def classify(model, im):
     return prediction[0] 
 
 if __name__ == "__main__":
-
-    from keras.models import load_model
+    import keras
 
     print(">> loading keras model for pose classification")
-    model = load_model('cnn/models/hand_poses_10.h5')
+    model = keras.models.load_model ("cnn/models/hand_poses_10.h5")
 
     # Fist
     print('<< FIST >>')
