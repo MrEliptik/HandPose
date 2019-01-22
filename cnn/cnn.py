@@ -16,6 +16,7 @@ def train():
     batch_size = 128
     epochs = 10
     learning_rate = 0.01
+    model_name = "cnn/models/hand_poses_" + str(epochs) + ".h5"
 
     # input image dimensions
     img_rows, img_cols = 28, 28
@@ -81,7 +82,7 @@ def train():
 
     print('Test loss:', score[0])
     print('Test accuracy:', score[1])
-    model.save("cnn/models/hand_poses_" + str(epochs) + ".h5")
+    model.save(model_name)
 
     # plotting the metrics
     fig = plt.figure()
