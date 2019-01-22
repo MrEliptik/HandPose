@@ -25,8 +25,6 @@ def main():
             os.makedirs('Poses/' + name_pose + '/' + name_pose + '_1/')
             currentPath = 'Poses/' + name_pose + '/' + name_pose + '_1/'
             currentExample = name_pose + '_1_'
-            with open("gestures.txt", "a") as myfile:
-                myfile.write(name_pose)
 
     elif(choice == "2"):
         # Display current poses
