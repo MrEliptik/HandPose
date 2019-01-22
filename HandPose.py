@@ -163,16 +163,13 @@ if __name__ == '__main__':
             output_frame = output_q.get_nowait()
         except:
             print('Queue empty')
-        if(output_q.full()):
+        if(cropped_output_q.full()):
             print("FULL")
             cropped_output_q.empty()
         try:
             cropped_output = cropped_output_q.get_nowait()
         except:
             print('Queue empty')
-        cropped_output = None
-        inferences = None
-        output_frame = None
 
         if(inferences_q.full()):
             print("FULL")
@@ -181,6 +178,10 @@ if __name__ == '__main__':
             inferences = inferences_q.get_nowait()
         except:
             print('Queue empty')
+
+        cropped_output  = None
+        inferences      = None
+        output_frame    = None 
 
         elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
         num_frames += 1

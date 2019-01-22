@@ -13,8 +13,6 @@ score_thresh = 0.24
 
 # Create a worker thread that loads graph and
 # does detection on images in an input queue and puts it on an output queue
-
-
 def worker(input_q, output_q, cap_params, frame_processed):
     print(">> loading frozen model for worker")
     detection_graph, sess = detector_utils.load_inference_graph()
