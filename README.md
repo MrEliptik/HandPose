@@ -91,7 +91,8 @@ Launch the training with:
 
 ## Architecture
 
-*coming soon*
+### CNN architecture
+![cnn architecture](Results/nn.png)
 
 ## TODO
 - ⌛ Add NN architectures
