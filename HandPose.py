@@ -50,7 +50,6 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
             # classify hand pose
             if res is not None:
                 class_res = classifier.classify(model, classification_graph, session, res)
-                print(class_res)
                 inferences_q.put(class_res)       
             
             # add frame annotated with bounding box to queue
