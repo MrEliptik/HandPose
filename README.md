@@ -88,7 +88,12 @@ Launch the training with:
 ## Architecture
 
 ### CNN architecture
-![cnn architecture](Results/nn.png)
+![cnn architecture](Results/nn.png)  
+Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation and kernel size 3, followed by a 2x2 max pooling. Finally a 128 dense layer followed by a softmax layer to give the 6-classes prediction.
+
+### SSD architecture
+![ssd architecture](Results/ssd.png)
+For more information on the SSD, head to the [references](###References)
 
 ## TODO
 - ⌛ Add SSD architecture
