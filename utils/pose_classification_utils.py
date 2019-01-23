@@ -57,7 +57,7 @@ if __name__ == "__main__":
 
     print(">> loading keras model for pose classification")
     try:
-        model = keras.models.load_model("cnn/models/hand_poses_10.h5")
+        model = keras.models.load_model("cnn/models/hand_poses_win_wGarbage_10.h5")
     except Exception as e:
         print(e)
 
