@@ -11,13 +11,12 @@ A program to recognize hand pose from an RGB camera.
 
 These instructions will help you setting up the project and understanding how the software is working. You'll see the file structure and what each file does. 
 
-### Requirements
-
+### Requirements [*coming soon*]
 See the *requirements.txt* file or simply run:
 
     pip install -r requirements.txt
 
-### File structure
+### File structure [*outdated*]
 .  
 ├── cnn &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Contains the cnn architecture and the models.**  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── models              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Trained models.**  
@@ -39,7 +38,7 @@ To run the multithreaded hand pose recognition, simply run:
     python HandPose.py
 
 
-### Adding a new pose
+### Adding a new pose[*outdated*]
 
 To add a new pose, launch the *AddPose.py* script doing:
 
@@ -79,7 +78,7 @@ This script will go to the poses folder and make sure every images is the right 
 
 You then have to retrain the network. For that, open the file situated in "*cnn/cnn.py*" and edit the hyperparameters and the model file name if needed. The saved model will be situated in "*cnn/models/*"
 
-You don't have to specifiy the number of classes, it will be infered from the number of directories under "*Poses/*" .
+You don't have to specifiy the number of classes, it will be infered from the number of directories under "*Poses/*".
 
 Launch the training with:
 
@@ -100,6 +99,8 @@ For more information on the SSD, head to the [references](###References)
 - ⌛ Add explanations on the pipeline
 - ⌛ Generate requirements.txt
 - ⌛ Clean imports
+- ⌛ Update file structure
+- ⌛ Add instructions for garbage pose
 - ⌛ Improve hand detection of the SSD
 - ✔ ~~Add SSD architecture~~
 - ✔ ~~Add NN architecture~~
