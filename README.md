@@ -4,16 +4,15 @@
 
 A program to recognize hand pose from an RGB camera.
 
-## TODO
-- Fix multi-threaded detection??
-- Add more examples to each gesture
-- ~~Add interface to live see inference from network~~
-- ~~Test model~~
-- ~~Tweak training/structure of CNN~~
+![testing different poses](https://raw.githubusercontent.com/MrEliptik/HandPose/tree/master/Results/result.gif)
 
 ## Getting Started
 
 These instructions will help you setting up the project and understanding how the software is working. You'll see the file structure and what each file does. 
+
+### Note
+
+For now, the multithreading only seems to work on windows. I might have a problem of compatibilities between the keras version between Windows and Linux. I'll work on that.
 
 ### Requirements
 
@@ -23,11 +22,11 @@ See the *requirements.txt* file or simply run:
 
 ### File structure
 .  
-├── cnn &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Contains the cnn architecture and the models.**  
-│   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── models              **Trained models.**  
+├── cnn &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Contains the cnn architecture and the models.**  
+│   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── models              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Trained models.**  
 ├── hand_inference_graph  
 ├── model-checkpoint  
-├── Poses &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**The poses dataset. Each pose will have its folder.**  
+├── Poses &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**The poses dataset. Each pose will have its folder.**  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Dang  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Fist  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Four  
@@ -41,7 +40,6 @@ See the *requirements.txt* file or simply run:
 To run the multithreaded hand pose recognition, simply run:
 
     python HandPose.py
-
 
 
 ### Adding a new pose
@@ -91,6 +89,14 @@ Launch the training with:
     python cnn/cnn.py
 
 
+## TODO
+- Understand why multithreading doesn't work on linux
+- See if Keras is the right version (Windows and Linux)
+- ~~Fix multi-threaded detection~~
+- ~~Add more examples to each gesture~~
+- ~~Add interface to live see inference from network~~
+- ~~Test model~~
+- ~~Tweak training/structure of CNN~~
 
 ## Author
 
