@@ -94,9 +94,9 @@ Launch the training with:
 *coming soon*
 
 ## TODO
-- Add NN architectures
-- Understand why multithreading doesn't work on linux
-- See if Keras is the right version (Windows and Linux)
+- ⌛ Add NN architectures
+- ⌛ Understand why multithreading doesn't work on linux
+- ⌛ See if Keras is the right version (Windows and Linux)
 - ✔ ~~Fix multi-threaded detection~~
 - ✔ ~~Add more examples to each gesture~~
 - ✔ ~~Add interface to live see inference from network~~
