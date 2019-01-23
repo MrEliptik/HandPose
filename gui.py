@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 from random import randint
 
-def drawInferences(values, names=['', '', '', '', '']):
+def drawInferences(values, names=['', '', '', '', '', '']):
     nb_classes              = len(values)
     left_margin             = 150
     margin                  = 50

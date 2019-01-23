@@ -143,7 +143,15 @@ if __name__ == '__main__':
     print(cap_params, args)
     
     # Count number of files to increment new example directory
-    poses = os.listdir('Poses/')
+    poses = []
+    file = open("poses.txt", "r") 
+    lines = file.readlines()
+    for line in lines:
+        line = line.strip()
+        if(line != ""):
+            print(line)
+            poses.append(line)
+
 
     # spin up workers to paralleize detection.
     pool = Pool(args.num_workers, worker,
@@ -179,7 +187,7 @@ if __name__ == '__main__':
 
         # Display inferences
         if(inferences is not None):
-           gui.drawInferences(inferences, poses)
+            gui.drawInferences(inferences, poses)
 
         if (cropped_output is not None):
             cropped_output = cv2.cvtColor(cropped_output, cv2.COLOR_RGB2BGR)

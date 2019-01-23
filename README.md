@@ -11,10 +11,6 @@ A program to recognize hand pose from an RGB camera.
 
 These instructions will help you setting up the project and understanding how the software is working. You'll see the file structure and what each file does. 
 
-### Note
-
-For now, the multithreading only seems to work on windows. I might have a problem of compatibilities between the keras version between Windows and Linux. I'll work on that.
-
 ### Requirements
 
 See the *requirements.txt* file or simply run:
@@ -95,9 +91,10 @@ Launch the training with:
 ![cnn architecture](Results/nn.png)
 
 ## TODO
-- ⌛ Add NN architectures
-- ⌛ Understand why multithreading doesn't work on linux
-- ⌛ See if Keras is the right version (Windows and Linux)
+- ⌛ Add SSD architecture
+- ✔ ~~Add NN architecture~~
+- ✔ ~~Understand why multithreading doesn't work on linux~~
+- ✔ ~~See if Keras is the right version (Windows and Linux)~~
 - ✔ ~~Fix multi-threaded detection~~
 - ✔ ~~Add more examples to each gesture~~
 - ✔ ~~Add interface to live see inference from network~~
