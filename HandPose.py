@@ -10,9 +10,10 @@ import datetime
 import argparse
 import keras
 import gui
+import os
 
 frame_processed = 0
-score_thresh = 0.24
+score_thresh = 0.18
 
 # Create a worker thread that loads graph and
 # does detection on images in an input queue and puts it on an output queue
@@ -25,7 +26,7 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
 
     print(">> loading keras model for worker")
     try:
-        model, classification_graph, session = classifier.load_KerasGraph("cnn/models/hand_poses_win_10.h5")
+        model, classification_graph, session = classifier.load_KerasGraph("cnn/models/hand_poses_win_wGarbage_10.h5")
     except Exception as e:
         print(e)
 
@@ -141,6 +142,8 @@ if __name__ == '__main__':
 
     print(cap_params, args)
     
+    # Count number of files to increment new example directory
+    poses = os.listdir('Poses/')
 
     # spin up workers to paralleize detection.
     pool = Pool(args.num_workers, worker,
@@ -176,7 +179,7 @@ if __name__ == '__main__':
 
         # Display inferences
         if(inferences is not None):
-           gui.drawInferences(inferences, ['Four', 'Dang', 'Startrek', 'Fist', 'Palm'])
+           gui.drawInferences(inferences, poses)
 
         if (cropped_output is not None):
             cropped_output = cv2.cvtColor(cropped_output, cv2.COLOR_RGB2BGR)
