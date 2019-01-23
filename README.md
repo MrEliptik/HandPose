@@ -96,8 +96,11 @@ Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation 
 For more information on the SSD, head to the [references](###References)
 
 ## TODO
+- ⌛ Remove garbage as a choice when adding more example to existing pose
+- ⌛ Add explanations on the pipeline
 - ⌛ Generate requirements.txt
 - ⌛ Clean imports
+- ⌛ Improve hand detection of the SSD
 - ✔ ~~Add SSD architecture~~
 - ✔ ~~Add NN architecture~~
 - ✔ ~~Understand why multithreading doesn't work on linux~~
