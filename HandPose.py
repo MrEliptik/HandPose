@@ -23,9 +23,9 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
     detection_graph, sess = detector_utils.load_inference_graph()
     sess = tf.Session(graph=detection_graph)
 
-    print(">> loading keras model for pose classification")
+    print(">> loading keras model for worker")
     try:
-        model, classification_graph, session = classifier.load_KerasGraph("cnn/models/hand_poses_10.h5")
+        model, classification_graph, session = classifier.load_KerasGraph("cnn/models/hand_poses_win_10.h5")
     except Exception as e:
         print(e)
 
@@ -49,9 +49,9 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
             
             # classify hand pose
             if res is not None:
-                pass
-                #class_res = classifier.classify(model, res)
-                #inferences_q.put(class_res)       
+                class_res = classifier.classify(model, classification_graph, session, res)
+                print(class_res)
+                inferences_q.put(class_res)       
             
             # add frame annotated with bounding box to queue
             cropped_output_q.put(res)
@@ -141,6 +141,7 @@ if __name__ == '__main__':
     cap_params['num_hands_detect'] = args.num_hands
 
     print(cap_params, args)
+    
 
     # spin up workers to paralleize detection.
     pool = Pool(args.num_workers, worker,
@@ -163,19 +164,20 @@ if __name__ == '__main__':
         output_frame = output_q.get()
         cropped_output = cropped_output_q.get()
 
-        #inferences = inferences_q.get()
+        inferences      = None
 
-        inferences      = None 
+        try:
+            inferences = inferences_q.get_nowait()
+        except Exception as e:
+            pass      
 
         elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
         num_frames += 1
         fps = num_frames / elapsed_time
 
         # Display inferences
-        '''
         if(inferences is not None):
            gui.drawInferences(inferences, ['Four', 'Dang', 'Startrek', 'Fist', 'Palm'])
-        '''
 
         if (cropped_output is not None):
             cropped_output = cv2.cvtColor(cropped_output, cv2.COLOR_RGB2BGR)
