@@ -96,7 +96,9 @@ Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation 
 For more information on the SSD, head to the [references](###References)
 
 ## TODO
-- ⌛ Add SSD architecture
+- ⌛ Generate requirements.txt
+- ⌛ Clean imports
+- ✔ ~~Add SSD architecture~~
 - ✔ ~~Add NN architecture~~
 - ✔ ~~Understand why multithreading doesn't work on linux~~
 - ✔ ~~See if Keras is the right version (Windows and Linux)~~
