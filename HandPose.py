@@ -162,7 +162,7 @@ if __name__ == '__main__':
     fps = 0
     index = 0
 
-    cv2.namedWindow('Multi-Threaded Detection', cv2.WINDOW_NORMAL)
+    cv2.namedWindow('Handpose', cv2.WINDOW_NORMAL)
 
     while True:
         frame = video_capture.read()
