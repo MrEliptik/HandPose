@@ -1,10 +1,11 @@
 # HandPose
 
-[WORK IN PROGRESS] *(See the TODO list below)*
+[✔ WORKING]  
+*(See the [TODO](##TODO) list below for future improvements)*
 
 A program to recognize hand pose from an RGB camera.
 
-![testing different poses](https://raw.githubusercontent.com/MrEliptik/HandPose/tree/master/Results/result.gif)
+![testing different poses](Results/result.gif)
 
 ## Getting Started
 
@@ -68,7 +69,7 @@ You can record for as long as you want, but remember that *camera_fps x seconds_
 See an example below:
 
 
-![recording startrek pose](https://raw.githubusercontent.com/MrEliptik/HandPose/tree/master/Examples/startrek.gif)
+![recording startrek pose](Examples/startrek.gif)
 
 Then you want to head to the new pose folder situated in *Poses/name_of_your_pose/name_of_your_pose_1* and manually delete images that doesn't show well your hand pose.   
 
@@ -88,19 +89,23 @@ Launch the training with:
 
     python cnn/cnn.py
 
+## Architecture
+
+*coming soon*
 
 ## TODO
+- Add NN architectures
 - Understand why multithreading doesn't work on linux
 - See if Keras is the right version (Windows and Linux)
-- ~~Fix multi-threaded detection~~
-- ~~Add more examples to each gesture~~
-- ~~Add interface to live see inference from network~~
-- ~~Test model~~
-- ~~Tweak training/structure of CNN~~
+- ✔ ~~Fix multi-threaded detection~~
+- ✔ ~~Add more examples to each gesture~~
+- ✔ ~~Add interface to live see inference from network~~
+- ✔ ~~Test model~~
+- ✔ ~~Tweak training/structure of CNN~~
 
 ## Author
 
-* **Victor MEUNIER** - *HandPose* - [MrEliptik](https://github.com/MrEliptik)
+* **Victor MEUNIER** - *HandPose* - [MrEliptik](https://github.com/MrEliptik) - [victormeunier.com](http://victormeunier.com) - [blog.victormeunier.com](http://blog.victormeunier.com)
 
 ### References
 
