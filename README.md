@@ -11,25 +11,30 @@ A program to recognize hand pose from an RGB camera.
 
 These instructions will help you setting up the project and understanding how the software is working. You'll see the file structure and what each file does. 
 
-### Requirements [*coming soon*]
+### Requirements
 See the *requirements.txt* file or simply run:
 
     pip install -r requirements.txt
 
-### File structure [*outdated*]
+### File structure
 .  
 ├── cnn &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Contains the cnn architecture and the models.**  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── models              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Trained models.**  
+├── Dataset  
+├── Examples  
 ├── hand_inference_graph  
 ├── model-checkpoint  
 ├── Poses &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**The poses dataset. Each pose will have its folder.**  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Dang  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Fist  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Four  
+│   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Garbage  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Palm  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Startrek  
-├── protos  
+├── protos
+├── Results  
 └── utils  
+
 
 ### Running the hand pose recognition
 
@@ -106,11 +111,11 @@ Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation 
 For more information on the SSD, head to the [references](###References)
 
 ## TODO
-- ⌛ Generate requirements.txt
-- ⌛ Clean imports
-- ⌛ Update file structure
 - ⌛ Add instructions for garbage pose
 - ⌛ Improve hand detection of the SSD
+- ✔ ~~Update file structure~~
+- ✔ ~~Generate requirements.txt~~
+- ✔ ~~Clean imports~~
 - ✔ ~~Add explanations on the pipeline~~
 - ✔ ~~Remove garbage as a choice when adding more example to existing pose~~
 - ✔ ~~Add SSD architecture~~
