@@ -43,17 +43,18 @@ To run the multithreaded hand pose recognition, simply run:
     python HandPose.py
 
 
-### Adding a new pose[*outdated*]
+### Adding a new pose
 
 To add a new pose, launch the *AddPose.py* script doing:
 
     python AddPose.py
 
-You will then be prompted to make a choice. Type "1" and enter. Now you can enter the name of your pose and validate with enter:
+You will then be prompted to make a choice. Type '1' and 'enter'. Now you can enter the name of your pose and validate with 'enter':
 
     Do you want to :
         1 - Add new pose
         2 - Add examples to existing pose
+        3 - Add garbarge examples
     1
 
     Enter a name for the pose you want to add :
@@ -81,14 +82,35 @@ Once that is done you want to normalize those newly created images. Launch *norm
 
 This script will go to the poses folder and make sure every images is the right size. It will skip those that are already 28x28. 
 
-You then have to retrain the network. For that, open the file situated in "*cnn/cnn.py*" and edit the hyperparameters and the model file name if needed. The saved model will be situated in "*cnn/models/*"
+You then have to retrain the network. For that, open the file situated in '*cnn/cnn.py*' and edit the hyperparameters and the model file name if needed. The saved model will be situated in '*cnn/models/*'
 
-You don't have to specifiy the number of classes, it will be infered from the number of directories under "*Poses/*".
+You don't have to specifiy the number of classes, it will be infered from the number of directories under '*Poses/*'.
 
 Launch the training with:
 
     python cnn/cnn.py
 
+### Adding garbage examples
+
+Garbage examples are examples where you face the camera and don't do any special hand pose. You want to show your hand, move them around, but don't do any of your poses. The goal is for the SSD to detect some hands and also some false positives. This will generate images that aren't any pose, they are garbage. We do that because we don't want our CNN to missclasify every time a hand is seen.  
+
+Launch the *AddPose.py* script doing:
+
+    python AddPose.py
+
+You will then be prompted to make a choice. Type '3' and 'enter'.
+
+    Do you want to :
+        1 - Add new pose
+        2 - Add examples to existing pose
+        3 - Add garbarge examples
+    3
+    You'll now be prompted to record the pose you want to add.
+                 Please place your hand beforehand facing the
+                 camera, and press any key when ready.
+                 When finished press 'q'.
+
+Same thing as before, press 'enter' to start the recording and stop with 'q'. Then normalize and relaunch training.
 ## Architecture
 
 ### Pipeline
@@ -111,8 +133,8 @@ Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation 
 For more information on the SSD, head to the [references](###References)
 
 ## TODO
-- ⌛ Add instructions for garbage pose
 - ⌛ Improve hand detection of the SSD
+- ✔ ~~Add instructions for garbage pose~~
 - ✔ ~~Update file structure~~
 - ✔ ~~Generate requirements.txt~~
 - ✔ ~~Clean imports~~
