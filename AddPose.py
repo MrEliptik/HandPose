@@ -34,9 +34,10 @@ def main():
         possible_choices = []
         i = 1
         for dir in dirs:
-            dirs_choice += str(i) + ' - ' + str(dir) + ' / '
-            possible_choices.append(str(i))
-            i+=1
+            if(not dir == 'Garbage'):
+                dirs_choice += str(i) + ' - ' + str(dir) + ' / '
+                possible_choices.append(str(i))
+                i+=1
         
         # Ask user to choose to which pose to add examples
         print('Choose one of the following pose :')

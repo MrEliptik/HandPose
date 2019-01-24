@@ -86,6 +86,17 @@ Launch the training with:
 
 ## Architecture
 
+### Pipeline
+
+The pipeline of this project consists of 4 steps :
+
+![project's pipeline](Results/pipeline.png)
+
+- A frame is grabbed from the camera by a dedicated thread, converted to RGB (from BGR) and put into the input queue
+- A worker grabs the frame from the queue and pass it into the SSD. This gives us a bouding box of where the hand(s) is and the corresponding cropped frame. 
+- This cropped frame of the hand is then passed to the CNN, which give us a class vector output of values between 0 and 1. These values correspond to the probability of the frame to be one of the classes. The worker has finished its job and put: the frame with bouding box drawn on top, the cropped frame and the classes into three different queues.
+- The main thread, responsible of showing the results can grab the informations from the queues and display them in three windows.
+
 ### CNN architecture
 ![cnn architecture](Results/nn.png)  
 Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation and kernel size 3, followed by a 2x2 max pooling. Finally a 128 dense layer followed by a softmax layer to give the 6-classes prediction.
@@ -95,13 +106,13 @@ Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation 
 For more information on the SSD, head to the [references](###References)
 
 ## TODO
-- ⌛ Remove garbage as a choice when adding more example to existing pose
-- ⌛ Add explanations on the pipeline
 - ⌛ Generate requirements.txt
 - ⌛ Clean imports
 - ⌛ Update file structure
 - ⌛ Add instructions for garbage pose
 - ⌛ Improve hand detection of the SSD
+- ✔ ~~Add explanations on the pipeline~~
+- ✔ ~~Remove garbage as a choice when adding more example to existing pose~~
 - ✔ ~~Add SSD architecture~~
 - ✔ ~~Add NN architecture~~
 - ✔ ~~Understand why multithreading doesn't work on linux~~
