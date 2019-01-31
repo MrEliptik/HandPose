@@ -12,12 +12,12 @@ def main():
                             \n 2 - Add examples to existing pose \
                             \n 3 - Add garbage examples')
 
-    choice = input()
-    while(choice != '1' and choice != '2' and choice != '3'):
+    menu_choice = input()
+    while(menu_choice != '1' and menu_choice != '2' and menu_choice != '3'):
         print('Please enter 1 or 2')
-        choice = input()
+        menu_choice = input()
 
-    if(choice == '1'):
+    if(menu_choice == '1'):
         print('Enter a name for the pose you want to add :')
         name_pose = input()
 
@@ -27,24 +27,23 @@ def main():
             currentPath = 'Poses/' + name_pose + '/' + name_pose + '_1/'
             currentExample = name_pose + '_1_'
 
-    elif(choice == '2'):
+    elif(menu_choice == '2'):
         # Display current poses
         dirs = os.listdir('Poses/')
         dirs_choice = ''
         possible_choices = []
         i = 1
         for dir in dirs:
-            if(not dir == 'Garbage'):
-                dirs_choice += str(i) + ' - ' + str(dir) + ' / '
-                possible_choices.append(str(i))
-                i+=1
+            dirs_choice += str(i) + ' - ' + str(dir) + ' / '
+            possible_choices.append(str(i))
+            i+=1
         
         # Ask user to choose to which pose to add examples
-        print('Choose one of the following pose :')
+        print('Choose one of the following pose:')
         print(dirs_choice)       
         choice = input()
-        while(not choice in possible_choices):
-            print('Please enter one of the following: ' + str(possible_choices))
+        while(not choice in possible_choices and dirs[int(choice)-1]=='garbage'):
+            print('Please enter one of the following (not garbage): ' + str(possible_choices))
             choice = input()
 
         # Count number of files to increment new example directory
@@ -60,7 +59,7 @@ def main():
             currentExample = dirs[int(choice)-1] + '_' + str(index) + '_'
             name_pose = dirs[int(choice) - 1]
     
-    elif(choice == '3'):
+    elif(menu_choice == '3'):
         # Create folder for pose 
         if not os.path.exists('Poses/Garbage/'):
             os.makedirs('Poses/Garbage/Garbage_1/')
