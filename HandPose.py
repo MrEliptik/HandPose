@@ -26,7 +26,7 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
 
     print(">> loading keras model for worker")
     try:
-        model, classification_graph, session = classifier.load_KerasGraph("cnn/models/hand_poses_win_wGarbage_10.h5")
+        model, classification_graph, session = classifier.load_KerasGraph("cnn/models/hand_poses_wGarbage_10.h5")
     except Exception as e:
         print(e)
 

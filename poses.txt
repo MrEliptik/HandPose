@@ -1,6 +1,6 @@
-Rock
-Fist
 Four
 Garbage
-Palm
+Rock
 Startrek
+Fist
+Palm
