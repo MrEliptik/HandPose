@@ -25,11 +25,11 @@ See the *requirements.txt* file or simply run:
 ├── hand_inference_graph  
 ├── model-checkpoint  
 ├── Poses &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**The poses dataset. Each pose will have its folder.**  
-│   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Dang  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Fist  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Four  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Garbage  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Palm  
+│   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;├── Rock  
 │   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── Startrek  
 ├── protos
 ├── Results  
@@ -66,7 +66,8 @@ You will then be prompted to make a choice. Type '1' and 'enter'. Now you can en
                  When finished press 'q'.
 
 Place your hand facing the camera, doing the pose you want to save and press enter when ready. You'll see the camera feed. Move your hand slowly across the frame, closer and further from the camera. Try to rotate a bit your pose. Do every movement slowly as you want to create ghosting.  
-You can record for as long as you want, but remember that *camera_fps x seconds_of_recording* images will be generated.   
+You can record for as long as you want, but remember that *camera_fps x seconds_of_recording* images will be generated.  
+
 See an example below:
 
 
@@ -132,6 +133,10 @@ Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation 
 ![ssd architecture](Results/ssd.png)
 For more information on the SSD, head to the [references](###References)
 
+## Performance
+
+With 4 workers, I achieved 25fps on a intel i5-8300H running @4Ghz. 
+
 ## TODO
 - ⌛ Improve hand detection of the SSD
 - ✔ ~~Add instructions for garbage pose~~
@@ -152,7 +157,7 @@ For more information on the SSD, head to the [references](###References)
 
 ## Author
 
-* **Victor MEUNIER** - *HandPose* - [MrEliptik](https://github.com/MrEliptik) - [victormeunier.com](http://victormeunier.com) - [blog.victormeunier.com](http://blog.victormeunier.com)
+* **Victor MEUNIER** - *HandPose* - [MrEliptik](https://github.com/MrEliptik) - [victormeunier.com](http://victormeunier.com) - [blog.victormeunier.com](http://blog.victormeunier.com) - [victormeunier.dev@gmail.com](mailto:victormeunier.dev@gmail.com)
 
 ### References
 
