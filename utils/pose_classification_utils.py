@@ -2,6 +2,7 @@ import cv2
 import numpy as np
 from tensorflow import Graph, Session
 import tensorflow as tf
+import os; os.environ['KERAS_BACKEND'] = 'tensorflow'
 import keras
 
 def load_KerasGraph(path): 

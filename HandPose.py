@@ -8,9 +8,9 @@ import time
 from utils.detector_utils import WebcamVideoStream
 import datetime
 import argparse
+import os; os.environ['KERAS_BACKEND'] = 'tensorflow'
 import keras
 import gui
-import os
 
 frame_processed = 0
 score_thresh = 0.18
