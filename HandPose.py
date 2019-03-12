@@ -8,7 +8,8 @@ import time
 from utils.detector_utils import WebcamVideoStream
 import datetime
 import argparse
-import os; os.environ['KERAS_BACKEND'] = 'tensorflow'
+import os; 
+os.environ['KERAS_BACKEND'] = 'tensorflow'
 import keras
 import gui
 
@@ -144,8 +145,8 @@ if __name__ == '__main__':
     
     # Count number of files to increment new example directory
     poses = []
-    file = open("poses.txt", "r") 
-    lines = file.readlines()
+    _file = open("poses.txt", "r") 
+    lines = _file.readlines()
     for line in lines:
         line = line.strip()
         if(line != ""):

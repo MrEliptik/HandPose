@@ -33,8 +33,8 @@ def main():
         dirs_choice = ''
         possible_choices = []
         i = 1
-        for dir in dirs:
-            dirs_choice += str(i) + ' - ' + str(dir) + ' / '
+        for _dir in dirs:
+            dirs_choice += str(i) + ' - ' + str(_dir) + ' / '
             possible_choices.append(str(i))
             i+=1
         
@@ -94,7 +94,7 @@ def main():
 
     while(cap.isOpened()):
         ret, frame = cap.read()
-        if ret == True:
+        if ret:
             # write the frame
             out.write(frame)
 
@@ -112,7 +112,7 @@ def main():
     vid = cv2.VideoCapture(currentPath + name_pose + '.avi')
 
     # Check if the video
-    if (vid.isOpened() == False):
+    if (not vid.isOpened()):
         print('Error opening video stream or file')
         return
 
@@ -121,13 +121,13 @@ def main():
     sess = tf.Session(graph=detection_graph)
     print('>> model loaded!')
     
-    iter = 1
+    _iter = 1
     # Read until video is completed
     while(vid.isOpened()):
         # Capture frame-by-frame
         ret, frame = vid.read()
-        if ret == True:
-            print('   Processing frame: ' + str(iter))
+        if ret:
+            print('   Processing frame: ' + str(_iter))
             # Resize and convert to RGB for NN to work with
             frame = cv2.resize(frame, (320, 180), interpolation=cv2.INTER_AREA)
 
@@ -141,14 +141,14 @@ def main():
 
             # Save cropped image 
             if(res is not None):       
-                cv2.imwrite(currentPath + currentExample + str(iter) + '.png', cv2.cvtColor(res, cv2.COLOR_RGB2BGR))
+                cv2.imwrite(currentPath + currentExample + str(_iter) + '.png', cv2.cvtColor(res, cv2.COLOR_RGB2BGR))
 
-            iter += 1
+            _iter += 1
         # Break the loop
         else:
             break
 
-    print('   Processed ' + str(iter) + ' frames!')
+    print('   Processed ' + str(_iter) + ' frames!')
 
     vid.release()
 
