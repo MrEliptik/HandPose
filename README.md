@@ -19,8 +19,7 @@ See the *requirements.txt* file or simply run:
 ### File structure
 .  
 ├── cnn &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Contains the cnn architecture and the models.**  
-│   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── models              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Trained models.**  
-├── Dataset  
+│   &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;└── models              &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;**Trained models.**    
 ├── Examples  
 ├── hand_inference_graph  
 ├── model-checkpoint  
@@ -42,6 +41,16 @@ To run the multithreaded hand pose recognition, simply run:
 
     python HandPose.py
 
+### Downloading the dataset
+
+The mediafire link is here: http://www.mediafire.com/file/wt7dc5e9jgnym04/Poses.tar.gz/file 
+Download, and extract the Poses folder that you then place in the root of the Handpose folder.
+
+OR, on Linux, just run:
+
+    ./download_dataset.sh
+
+this will download, extract the files and remove the archive file.
 
 ### Adding a new pose
 
@@ -112,6 +121,7 @@ You will then be prompted to make a choice. Type '3' and 'enter'.
                  When finished press 'q'.
 
 Same thing as before, press 'enter' to start the recording and stop with 'q'. Then normalize and relaunch training.
+
 ## Architecture
 
 ### Pipeline
