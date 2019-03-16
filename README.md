@@ -126,7 +126,7 @@ The pipeline of this project consists of 4 steps :
 - The main thread, responsible of showing the results can grab the informations from the queues and display them in three windows.
 
 ### CNN architecture
-![cnn architecture](Results/nn.png)  
+![cnn architecture](Results/cnn.png)  
 Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation and kernel size 3, followed by a 2x2 max pooling. Finally a 128 dense layer followed by a softmax layer to give the 6-classes prediction.
 
 ### SSD architecture
