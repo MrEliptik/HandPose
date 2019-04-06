@@ -21,18 +21,18 @@ def save_csv(csv_path, csv_content):
             wr.writerow(csv_content[i])
 
 
-def get_bbox_visualize(base_path, _dir):
+def get_bbox_visualize(base_path, dir):
     image_path_array = []
-    for root, dirs, filenames in os.walk(base_path + _dir):
+    for root, dirs, filenames in os.walk(base_path + dir):
         for f in filenames:
             if(f.split(".")[1] == "jpg"):
-                img_path = base_path + _dir + "/" + f
+                img_path = base_path + dir + "/" + f
                 image_path_array.append(img_path)
 
     #sort image_path_array to ensure its in the low to high order expected in polygon.mat
     image_path_array.sort()
     boxes = sio.loadmat(
-        base_path + _dir + "/polygons.mat")
+        base_path + dir + "/polygons.mat")
     # there are 100 of these per folder in the egohands dataset
     polygons = boxes["polygons"][0]
     # first = polygons[0]
@@ -99,7 +99,7 @@ def get_bbox_visualize(base_path, _dir):
 
         csv_path = img_id.split(".")[0]
         if not os.path.exists(csv_path + ".csv"):
-            cv2.putText(img, "dir : " + _dir + " - " + tail, (20, 50),
+            cv2.putText(img, "DIR : " + dir + " - " + tail, (20, 50),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.75, (77, 255, 9), 2)
             cv2.imshow('Verifying annotation ', img)
             save_csv(csv_path + ".csv", csvholder)
@@ -118,23 +118,23 @@ def generate_label_files(image_dir):
     header = ['filename', 'width', 'height',
               'class', 'xmin', 'ymin', 'xmax', 'ymax']
     for root, dirs, filenames in os.walk(image_dir):
-        for _dir in dirs:
+        for dir in dirs:
             csvholder = []
             csvholder.append(header)
             loop_index = 0
-            for f in os.listdir(image_dir + _dir):
+            for f in os.listdir(image_dir + dir):
                 if(f.split(".")[1] == "csv"):
                     loop_index += 1
                     #print(loop_index, f)
-                    csv_file = open(image_dir + _dir + "/" + f, 'r')
+                    csv_file = open(image_dir + dir + "/" + f, 'r')
                     reader = csv.reader(csv_file)
                     for row in reader:
                         csvholder.append(row)
                     csv_file.close()
-                    os.remove(image_dir + _dir + "/" + f)
-            save_csv(image_dir + _dir + "/" + _dir + "_labels.csv", csvholder)
-            print("Saved label csv for ", _dir, image_dir +
-                  _dir + "/" + _dir + "_labels.csv")
+                    os.remove(image_dir + dir + "/" + f)
+            save_csv(image_dir + dir + "/" + dir + "_labels.csv", csvholder)
+            print("Saved label csv for ", dir, image_dir +
+                  dir + "/" + dir + "_labels.csv")
 
 
 # Split data, copy to train/test folders
@@ -149,26 +149,26 @@ def split_data_test_eval_train(image_dir):
     test_samp_array = random.sample(range(data_size), k=data_sampsize)
 
     for root, dirs, filenames in os.walk(image_dir):
-        for _dir in dirs:
-            for f in os.listdir(image_dir + _dir):
+        for dir in dirs:
+            for f in os.listdir(image_dir + dir):
                 if(f.split(".")[1] == "jpg"):
                     loop_index += 1
                     print(loop_index, f)
 
                     if loop_index in test_samp_array:
-                        os.rename(image_dir + _dir +
+                        os.rename(image_dir + dir +
                                   "/" + f, "images/test/" + f)
-                        os.rename(image_dir + _dir +
+                        os.rename(image_dir + dir +
                                   "/" + f.split(".")[0] + ".csv", "images/test/" + f.split(".")[0] + ".csv")
                     else:
-                        os.rename(image_dir + _dir +
+                        os.rename(image_dir + dir +
                                   "/" + f, "images/train/" + f)
-                        os.rename(image_dir + _dir +
+                        os.rename(image_dir + dir +
                                   "/" + f.split(".")[0] + ".csv", "images/train/" + f.split(".")[0] + ".csv")
                     print(loop_index, image_dir + f)
-            print(">   done scanning director ", _dir)
-            os.remove(image_dir + _dir + "/polygons.mat")
-            os.rmdir(image_dir + _dir)
+            print(">   done scanning director ", dir)
+            os.remove(image_dir + dir + "/polygons.mat")
+            os.rmdir(image_dir + dir)
 
         print("Train/test content generation complete!")
         generate_label_files("images/")
@@ -176,8 +176,8 @@ def split_data_test_eval_train(image_dir):
 
 def generate_csv_files(image_dir):
     for root, dirs, filenames in os.walk(image_dir):
-        for _dir in dirs:
-            get_bbox_visualize(image_dir, _dir)
+        for dir in dirs:
+            get_bbox_visualize(image_dir, dir)
 
     print("CSV generation complete!\nGenerating train/test/eval folders")
     split_data_test_eval_train("egohands/_LABELLED_SAMPLES/")
@@ -188,14 +188,14 @@ def rename_files(image_dir):
     print("Renaming files")
     loop_index = 0
     for root, dirs, filenames in os.walk(image_dir):
-        for _dir in dirs:
-            for f in os.listdir(image_dir + _dir):
-                if (_dir not in f):
+        for dir in dirs:
+            for f in os.listdir(image_dir + dir):
+                if (dir not in f):
                     if(f.split(".")[1] == "jpg"):
                         loop_index += 1
-                        os.rename(image_dir + _dir +
-                                  "/" + f, image_dir + _dir +
-                                  "/" + _dir + "_" + f)
+                        os.rename(image_dir + dir +
+                                  "/" + f, image_dir + dir +
+                                  "/" + dir + "_" + f)
                 else:
                     break
 
@@ -219,7 +219,7 @@ def download_egohands_dataset(dataset_url, dataset_path):
         opener = urllib.request.URLopener()
         opener.retrieve(dataset_url, dataset_path)
         print("> download complete")
-        extract_folder(dataset_path)
+        extract_folder(dataset_path);
 
     else:
         extract_folder(dataset_path)
