@@ -1,0 +1,55 @@
+<?xml version="1.0" ?>
+<mapping>
+	<map>
+		<framework name="dense_1/BiasAdd" out_port_id="0"/>
+		<IR id="7" name="dense_1/MatMul" out_port_id="3"/>
+	</map>
+	<map>
+		<framework name="conv2d_1_input" out_port_id="0"/>
+		<IR id="0" name="conv2d_1_input" out_port_id="0"/>
+	</map>
+	<map>
+		<framework name="conv2d_1/BiasAdd" out_port_id="0"/>
+		<IR id="1" name="conv2d_1/convolution" out_port_id="3"/>
+	</map>
+	<map>
+		<framework name="conv2d_1/Relu" out_port_id="0"/>
+		<IR id="2" name="conv2d_1/Relu" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="conv2d_2/BiasAdd" out_port_id="0"/>
+		<IR id="3" name="conv2d_2/convolution" out_port_id="3"/>
+	</map>
+	<map>
+		<framework name="conv2d_2/Relu" out_port_id="0"/>
+		<IR id="4" name="conv2d_2/Relu" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="dropout_1/Identity" out_port_id="0"/>
+		<IR id="5" name="max_pooling2d_1/MaxPool" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="max_pooling2d_1/MaxPool" out_port_id="0"/>
+		<IR id="5" name="max_pooling2d_1/MaxPool" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="flatten_1/Reshape" out_port_id="0"/>
+		<IR id="6" name="flatten_1/Reshape" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="dropout_2/Identity" out_port_id="0"/>
+		<IR id="8" name="dense_1/Relu" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="dense_1/Relu" out_port_id="0"/>
+		<IR id="8" name="dense_1/Relu" out_port_id="1"/>
+	</map>
+	<map>
+		<framework name="dense_2/BiasAdd" out_port_id="0"/>
+		<IR id="9" name="dense_2/MatMul" out_port_id="3"/>
+	</map>
+	<map>
+		<framework name="dense_2/Softmax" out_port_id="0"/>
+		<IR id="10" name="dense_2/Softmax" out_port_id="1"/>
+	</map>
+</mapping>
