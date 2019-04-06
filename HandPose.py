@@ -1,4 +1,5 @@
 from utils import detector_utils as detector_utils
+from utils import ncs2_utils as ncs2
 from utils import pose_classification_utils as classifier
 import cv2
 import tensorflow as tf
@@ -27,7 +28,7 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
 
     print(">> loading keras model for worker")
     try:
-        model, classification_graph, session = classifier.load_KerasGraph("cnn/models/hand_poses_wGarbage_10.h5")
+        model, classification_graph, session = classifier.load_KerasGraph("cnn/models/KERAS/hand_poses_wGarbage_10.h5")
     except Exception as e:
         print(e)
 
@@ -44,13 +45,13 @@ def worker(input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_
             # get region of interest
             res = detector_utils.get_box_image(cap_params['num_hands_detect'], cap_params["score_thresh"],
                 scores, boxes, cap_params['im_width'], cap_params['im_height'], frame)
-            
+        
             # draw bounding boxes
             detector_utils.draw_box_on_image(cap_params['num_hands_detect'], cap_params["score_thresh"],
                 scores, boxes, cap_params['im_width'], cap_params['im_height'], frame)
             
             # classify hand pose
-            if res is not None:
+            if res is not None and inferences_q is not None:
                 class_res = classifier.classify(model, classification_graph, session, res)
                 inferences_q.put(class_res)       
             
@@ -122,12 +123,40 @@ if __name__ == '__main__':
         type=int,
         default=5,
         help='Size of the queue.')
+    parser.add_argument(
+        '-ncs2',
+        '--ncs2',
+        dest='ncs2',
+        type=bool,
+        default=True,
+        help='Run inferences on the NCS2')
+    parser.add_argument(
+        '-bin',
+        '--bin_path',
+        dest='bin_path',
+        type=str,
+        default='cnn/models/IR/IR_model.bin',
+        help='IR bin file')
+    parser.add_argument(
+        '-xml',
+        '--xml_path',
+        dest='xml_path',
+        type=str,
+        default='cnn/models/IR/IR_model.xml',
+        help='IR XML file')
     args = parser.parse_args()
 
     input_q             = Queue(maxsize=args.queue_size)
     output_q            = Queue(maxsize=args.queue_size)
     cropped_output_q    = Queue(maxsize=args.queue_size)
-    inferences_q        = Queue(maxsize=args.queue_size)
+    if not args.ncs2:
+        _inferences_q        = Queue(maxsize=args.queue_size)
+    else:
+        net = ncs2.readIRModels(args.bin_path, args.xml_path)
+        exec_net = ncs2.loadToDevice(net, _device="MYRIAD")
+        input_blob = next(iter(net.inputs))
+        output_blob = next(iter(net.outputs))
+        del net
 
     video_capture = WebcamVideoStream(
         src=args.video_source, width=args.width, height=args.height).start()
@@ -154,9 +183,13 @@ if __name__ == '__main__':
             poses.append(line)
 
 
-    # spin up workers to paralleize detection.
-    pool = Pool(args.num_workers, worker,
-                (input_q, output_q, cropped_output_q, inferences_q, cap_params, frame_processed))
+    # spin up workers to parallelize detection.
+    if ncs2:
+        pool = Pool(args.num_workers, worker,
+                (input_q, output_q, cropped_output_q, None, cap_params, frame_processed))
+    else:
+        pool = Pool(args.num_workers, worker,
+                (input_q, output_q, cropped_output_q, _inferences_q, cap_params, frame_processed))
 
     start_time = datetime.datetime.now()
     num_frames = 0
@@ -176,11 +209,14 @@ if __name__ == '__main__':
         cropped_output = cropped_output_q.get()
 
         inferences      = None
-
-        try:
-            inferences = inferences_q.get_nowait()
-        except Exception as e:
-            pass      
+        if not args.ncs2:
+            try:
+                inferences = _inferences_q.get_nowait()
+            except Exception as e:
+                pass   
+        else:
+            prepimg = ncs2.prepareImage(cropped_output, input_blob)
+            inferences = ncs2.infer(exec_net, input_blob, prepimg)[output_blob]
 
         elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
         num_frames += 1
