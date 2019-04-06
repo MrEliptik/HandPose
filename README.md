@@ -147,6 +147,12 @@ For more information on the SSD, head to the [references](###References)
 
 With 4 workers, I achieved 25fps on a intel i5-8300H running @4Ghz. 
 
+## Neural Compute Stick 2
+
+```
+mo.py --data_type FP16 --framework tf --input_model cnn/models/TF/tf_model.pb --model_name IR_model --output_dir cnn/models/IR/ --input_shape [1,28,28,1] --input conv2d_1_input --output dense_2/Softmax
+```
+
 ## TODO
 - ⌛ Improve hand detection of the SSD
 - ✔ ~~Add instructions for garbage pose~~
