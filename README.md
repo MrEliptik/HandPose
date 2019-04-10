@@ -154,6 +154,7 @@ mo.py --data_type FP16 --framework tf --input_model cnn/models/TF/tf_model.pb --
 ```
 
 ## TODO
+- ⌛ Add better support of webcam format (script for default format or automatically detect?)
 - ⌛ Improve hand detection of the SSD
 - ✔ ~~Add instructions for garbage pose~~
 - ✔ ~~Update file structure~~
