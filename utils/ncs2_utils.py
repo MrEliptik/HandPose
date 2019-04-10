@@ -3,9 +3,7 @@ import cv2
 from openvino.inference_engine import IENetwork, IEPlugin
 
 def readIRModels(bin_path, xml_path):
-    model_xml = "IR_model/IR_model.xml"
-    model_bin = "IR_model/IR_model.bin"
-    net = IENetwork(model=model_xml, weights=model_bin)
+    net = IENetwork(model=xml_path, weights=bin_path)
 
     return net
 
@@ -20,12 +18,11 @@ def prepareImage(im, net):
     # Convert to float values between 0. and 1.
     res = res.astype(dtype="float64")
     res = res / 255
-    res = np.reshape(res, (1, 28, 28, 1))
+    res = np.reshape(res, (1, 28, 28))
 
     input_blob = next(iter(net.inputs))
 
     n, c, h, w = net.inputs[input_blob].shape
-    print(n, c, h, w)
     prepimg = np.ndarray(shape=(n, c, h, w))
 
     # Change data layout from HW to NCHW
