@@ -93,14 +93,14 @@ if __name__ == '__main__':
         '--width',
         dest='width',
         type=int,
-        default=300,
+        default=320,
         help='Width of the frames in the video stream.')
     parser.add_argument(
         '-ht',
         '--height',
         dest='height',
         type=int,
-        default=200,
+        default=240,
         help='Height of the frames in the video stream.')
     parser.add_argument(
         '-ds',
@@ -156,7 +156,6 @@ if __name__ == '__main__':
         exec_net = ncs2.loadToDevice(net, _device="MYRIAD")
         input_blob = next(iter(net.inputs))
         output_blob = next(iter(net.outputs))
-        del net
 
     video_capture = WebcamVideoStream(
         src=args.video_source, width=args.width, height=args.height).start()
@@ -169,8 +168,6 @@ if __name__ == '__main__':
 
     # max number of hands we want to detect/track
     cap_params['num_hands_detect'] = args.num_hands
-
-    print(cap_params, args)
     
     # Count number of files to increment new example directory
     poses = []
@@ -213,20 +210,16 @@ if __name__ == '__main__':
             try:
                 inferences = _inferences_q.get_nowait()
             except Exception as e:
-                pass   
-        else:
-            prepimg = ncs2.prepareImage(cropped_output, input_blob)
-            inferences = ncs2.infer(exec_net, input_blob, prepimg)[output_blob]
+                pass
 
         elapsed_time = (datetime.datetime.now() - start_time).total_seconds()
         num_frames += 1
         fps = num_frames / elapsed_time
 
-        # Display inferences
-        if(inferences is not None):
-            gui.drawInferences(inferences, poses)
-
         if (cropped_output is not None):
+            if args.ncs2:
+                prepimg = ncs2.prepareImage(cropped_output, net)
+                inferences = ncs2.infer(exec_net, input_blob, prepimg)[output_blob][0]
             cropped_output = cv2.cvtColor(cropped_output, cv2.COLOR_RGB2BGR)
             if (args.display > 0):
                 cv2.namedWindow('Cropped', cv2.WINDOW_NORMAL)
@@ -242,6 +235,10 @@ if __name__ == '__main__':
                 else:
                     print("frames processed: ", index, "elapsed time: ",
                           elapsed_time, "fps: ", str(int(fps)))
+
+        # Display inferences
+        if(inferences is not None):
+            gui.drawInferences(inferences, poses)
 
     
         # print("frame ",  index, num_frames, elapsed_time, fps)
