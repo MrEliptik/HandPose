@@ -49,7 +49,7 @@ def test_classify(model, im):
     res = res / 255
     res = np.reshape(res, (1, 28, 28, 1))
 
-    prediction= model.predict(res)
+    prediction = model.predict(res)
 
     return prediction[0]
 
