@@ -141,6 +141,8 @@ Input image 28x28x1 (grayscale). Two convolutionnal layers with ReLu activation 
 
 ### SSD architecture
 ![ssd architecture](Results/ssd.png)
+*Note: This photo represents the original SSD architecture which uses VGG16 as a feature extractor. The one used in this project is using MobileNet instead.*
+
 For more information on the SSD, head to the [references](###References)
 
 ## Performance
