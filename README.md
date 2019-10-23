@@ -171,6 +171,10 @@ With 4 workers, I achieved 25fps on a intel i5-8300H running @4Ghz.
 
 * **Victor MEUNIER** - *HandPose* - [MrEliptik](https://github.com/MrEliptik) - [victormeunier.com](http://victormeunier.com) - [blog.victormeunier.com](http://blog.victormeunier.com) - [victormeunier.dev@gmail.com](mailto:victormeunier.dev@gmail.com)
 
+Want to support me? Buy me a coffee!
+
+<a href="https://www.buymeacoffee.com/mreliptik" target="_blank"><img src="https://bmc-cdn.nyc3.digitaloceanspaces.com/BMC-button-images/custom_images/orange_img.png" alt="Buy Me A Coffee" style="height: auto !important;width: auto !important;" ></a>
+
 ### References
 
 * **Victor Dibia** - *Real-time Hand-Detection using Neural Networks (SSD) on Tensorflow, (2017)*  
