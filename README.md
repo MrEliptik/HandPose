@@ -149,6 +149,27 @@ For more information on the SSD, head to the [references](###References)
 
 With 4 workers, I achieved 25fps on a intel i5-8300H running @4Ghz. 
 
+## Troubleshoot
+
+### Tensorflow 2
+
+If using Tensorflow 2, replace `import tensorflow as tf` with `import tensorflow.compat.v1 as tf` and add `tf.disable_v2_behavior()
+` at the beginning of the script.
+
+### Adding a pose: video codec
+
+When trying to add a pose with *AddPose.py*, if the video is not being written, try to change the codec from XVID to MJPG in a .mp4 container.
+
+Replace:
+
+    fourcc = cv2.VideoWriter_fourcc(*'XVID')
+    
+With
+
+    fourcc = cv2.VideoWriter_fourcc('M','J','P','G') 
+
+with '.mp4' as the extension.
+
 ## TODO
 - ⌛ Improve hand detection of the SSD
 - ✔ ~~Add instructions for garbage pose~~
